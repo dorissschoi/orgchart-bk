@@ -10,10 +10,13 @@ module.exports =
 	#		agent:	new agent("http://proxy1.scig.gov.hk:8080")				
 	
 	oauth2:
-		verifyURL:			"https://abc.com/org/oauth2/verify/"
+		verifyURL:			process.env.VERIFYURL
 		tokenURL:			"https://abc.com/org/oauth2/token/"
-		scope:				["https://abc.com/org/users"]
+		scope:				process.env.OAUTH2_SCOPE?.split(' ')	
 		userURL:			"https://abc.com/org/api/users/"
+
+	adminUser:
+		username: 'jokyip'
 
 	promise:
 		timeout:	10000 # ms
