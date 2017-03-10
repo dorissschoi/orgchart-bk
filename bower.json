@@ -32,9 +32,9 @@
     "angular-strap": "~2.2.3",
     "angular-bootstrap": "~0.13.0",
     "angular-filter": "~0.5.4",
-    "bootstrap": "3.1.1",
+    "bootstrap": "^3.3.7",
     "lodash": "3.10.1",
-    "util.auth": "0.0.3",
+    "util.auth": "*",
     "angularSails": "0.11.4",
     "ngInfiniteScroll": "1.2.1",
     "angular-tree-control": "*"

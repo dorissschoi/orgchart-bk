@@ -3,7 +3,7 @@ env = require './env.coffee'
 angular.module 'starter', ['ionic', 'starter.controller', 'starter.model', 'ActiveRecord', 'angular.filter', 'util.auth', 'treeControl', 'xeditable', 'ui.select', 'angular-scroll-complete', 'ngFancySelect']
 
 	.run (authService) ->
-		authService.login env.oauth2.opts
+		authService.login env.oauth2().opts
 		
 	.run ($rootScope, platform, $ionicPlatform, $location, $http) ->
 		$ionicPlatform.ready ->
