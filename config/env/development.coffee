@@ -4,19 +4,16 @@ module.exports =
 	hookTimeout:	400000
 	
 	port:			1337
-
-	#http:
-	#	opts:
-	#		agent:	new agent("http://proxy1.scig.gov.hk:8080")				
 	
 	oauth2:
 		verifyURL:			process.env.VERIFYURL
-		tokenURL:			"https://abc.com/org/oauth2/token/"
+		tokenURL:			process.env.TOKENURL
 		scope:				process.env.OAUTH2_SCOPE?.split(' ')	
-		userURL:			"https://abc.com/org/api/users/"
+		userURL:			process.env.USERURL
 
 	adminUser:
-		username: 'jokyip'
+		username:	process.env.ADMIN_ID
+		email:		process.env.ADMIN_EMAIL
 
 	promise:
 		timeout:	10000 # ms

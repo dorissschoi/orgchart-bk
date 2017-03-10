@@ -9,6 +9,19 @@
 	</ion-nav-buttons>
 	<ion-content>
 		<ion-list>
+			<div ng-if="userList.length!=0">
+				<ion-item class="item-divider whiteBG">User: </ion-item>
+				<ion-item class="itemPadding">
+					<div ng-init="userSel=model">
+						<fancy-select-model template-url="templates/user/select.html" 
+							ng-selected="userSel" 
+							ng-model="userList" 
+							label="username" 
+							title="Select users">
+						</fancy-select-model>
+					</div>
+				</ion-item>
+			</div>
 			<ion-item class="item-divider whiteBG">Supervisor: </ion-item>
 			<ion-item class="itemPadding">
 				<div ng-init="selected=model.supervisor">
