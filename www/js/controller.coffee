@@ -62,7 +62,7 @@ angular
 			show: ->
 				$scope.listView = true				
 			
-	.controller 'UserUpdateCtrl', ($scope, $state, $location, me, collection, resources, adminSelectUsers) ->		
+	.controller 'UserUpdateCtrl', ($scope, $state, $location, me, collection, resources) ->		
 	
 		updateSup = (item) ->
 			if _.isUndefined item.email
@@ -84,7 +84,7 @@ angular
 		_.extend $scope,
 			model: me
 			collection: collection
-			userList: adminSelectUsers
+			userList: []
 			selected: ''
 			save: ->
 				if $scope.model.seluser
