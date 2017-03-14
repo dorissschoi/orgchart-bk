@@ -32,7 +32,5 @@ module.exports =
 			password:	''
 			database:	'orgchart'	
 			
-	log:
-		level: 'info'
 		
 			

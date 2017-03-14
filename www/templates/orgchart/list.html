@@ -35,10 +35,12 @@
 				   on-selection="showInfo(node)"
 				   selected-node="selected"
 				   on-node-toggle="showToggle(node, expanded)">
-				   <span ng-switch="" on="node.subordinates.length==0">
-				   		<span ng-switch-when="true" class="glyphicon glyphicon-user" style="color:#D3D3D3" aria-hidden="true"></span>
-				   		<span ng-switch-when="false" class="glyphicon glyphicon-user" style="color:#444" aria-hidden="true"></span>
-				   	</span> {{node.username}} ({{node.email}})
+				   <span 
+				     ng-class="node.subordinates.length==0?'nosubordinates':'subordinates'"
+				     class="glyphicon glyphicon-user"
+				     aria-hidden="true">
+				   </span>
+				   	 {{node.username}} ({{node.email}})
 				</treecontrol>
 				
 				
