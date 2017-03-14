@@ -1,4 +1,3 @@
-argv = require('yargs').argv
 gulp = require 'gulp'
 browserify = require 'browserify'
 source = require 'vinyl-source-stream'
