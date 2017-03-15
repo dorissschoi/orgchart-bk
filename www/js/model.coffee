@@ -60,7 +60,12 @@ angular.module 'starter.model', ['PageableAR']
 		class Oauth2Users extends pageableAR.PageableCollection
 			model: Oauth2User
 			$urlRoot: "api/oauth2/user"
-		
+
+			$fetch: (opts = {}) ->
+				opts.params = opts.params || {}
+				opts.params.offset = @state.skip
+				super opts
+						
 		class AdminSelectUsers extends pageableAR.PageableCollection
 			model: User
 			$urlRoot: "api/admForSelect/user"		
