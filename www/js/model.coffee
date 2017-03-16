@@ -54,8 +54,6 @@ angular.module 'starter.model', ['PageableAR']
 		class Oauth2User extends pageableAR.Model
 			$idAttribute: 'username'		
 			$urlRoot: "api/oauth2/user"
-			#$urlRoot: "#{env.server.rest.urlRoot}/api/users/"
-		
 		
 		class Oauth2Users extends pageableAR.PageableCollection
 			model: Oauth2User
