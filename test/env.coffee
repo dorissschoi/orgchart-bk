@@ -1,5 +1,7 @@
-_ = require 'lodash'
-
+['OAUTH2_SCOPE', 'TOKENURL', 'CLIENT_ID', 'CLIENT_SECRET', 'USER_ID', 'USER_SECRET'].map (name) ->
+  if not (name of process.env)
+    throw new Error "process.env.#{name} not yet defined"
+    
 module.exports =
 	timeout: 4000000
 	client: 
