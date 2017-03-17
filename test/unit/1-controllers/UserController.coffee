@@ -1,37 +1,28 @@
 env = require '../../env.coffee'
 req = require 'supertest-as-promised'    
+oauth2 = require 'oauth2_client' 
 
 describe 'UserController', ->
-   token = null
+  token = null
   user = null
   supervisor = null  
   
   before ->
-    env.getToken()
-      .then (res) ->
-        token = res         
-
-  it 'get login user', ->
-    req sails.hooks.http.app
-      .get('/api/user/me')
-      .set 'Authorization', "Bearer #{token}"
-      .expect 200    
-      .then (res) ->
-        user = res
+    oauth2
+      .token env.tokenUrl, env.client, env.user, env.scope
+      .then (t) ->
+        token = t
   
-  it 'update supervisor', ->
-    # get supervisor
+  it 'update supervisor who never login',  ->
     sails.models.user
       .findOne
-         username: process.env.ADMIN_ID
-      .then (u) ->
-        supervisor = u
-      
-    req sails.hooks.http.app
-      .put "/api/user/#{user.id}"
-      .send
-         supervisor: supervisor 
-      .set 'Authorization', "Bearer #{token}"
-      .expect 200
-    
-     
+         username: process.env.USER_ID
+      .then (user) ->
+        req sails.hooks.http.app
+          .put "/api/user/#{user.id}"
+          .set 'Authorization', "Bearer #{token}"
+          .send 
+            supervisor: {email: 'user4@abc.com', username: 'user4', url: 'user4@abc.com'}
+          .expect 200
+          .toPromise()
+          .delay(100)
