@@ -1,4 +1,5 @@
 env = require '../../env.coffee'
+Promise = require 'bluebird'
 
 describe 'model', ->
   createdBy = null
@@ -30,7 +31,7 @@ describe 'model', ->
          console.log user
 
   it 'delete user', ->
-    sails.models.user
-      .destroy()
-      .then ->
-         return
+    Promise.mapSeries users, (u) ->
+      sails.models.user
+        .destroy
+          username: u.username         

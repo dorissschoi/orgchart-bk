@@ -1,28 +1,28 @@
 env = require '../../env.coffee'
 req = require 'supertest-as-promised'    
-path = require 'path'
-util = require 'util'
-_ = require 'lodash'
-fs = require 'fs'
-Promise = require 'bluebird'
+oauth2 = require 'oauth2_client' 
 
 describe 'UserController', ->
-  @timeout env.timeout
-  
   token = null
+  user = null
+  supervisor = null  
   
   before ->
-    env.getToken()
-      .then (res) ->
-        token = res
-
-  it 'update supervisor', (done) ->
-    req sails.hooks.http.app
-      .put "/api/user/#{env.user.id}"
-      .set 'Authorization', "Bearer #{token}"
-      .send 
-         supervisor: {email: 'user4@abc.com', username: 'user4', url: 'user4@abc.com'}
-      .toPromise()
-      .delay(100)
-      .then (res) ->
-         done()
+    oauth2
+      .token env.tokenUrl, env.client, env.user, env.scope
+      .then (t) ->
+        token = t
+  
+  it 'update supervisor who never login',  ->
+    sails.models.user
+      .findOne
+         username: process.env.USER_ID
+      .then (user) ->
+        req sails.hooks.http.app
+          .put "/api/user/#{user.id}"
+          .set 'Authorization', "Bearer #{token}"
+          .send 
+            supervisor: {email: 'user4@abc.com', username: 'user4', url: 'user4@abc.com'}
+          .expect 200
+          .toPromise()
+          .delay(100)
