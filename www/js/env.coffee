@@ -27,4 +27,4 @@ module.exports =
 			authUrl: 		"#{module.exports.server.auth.urlRoot}/oauth2/authorize/"
 			response_type:	"token"
 			scope:			config.OAUTH2_SCOPE
-			client_id:		config.WEB_CLIENT_ID
+			client_id:		config.CLIENT_ID
