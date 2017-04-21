@@ -21,7 +21,6 @@ module.exports =
 
 		Promise
 			.all [
-			
 				sails.services.rest().get req.user.token, "#{url}?#{strCond}"
 				sails.services.rest().get req.user.token, "#{imurl}"
 			]	
@@ -29,8 +28,7 @@ module.exports =
 				_.each result[0].body.results, (r) ->
 					info = _.find result[1].body.results, {username: r.username}
 					if !_.isUndefined info
-						_.extend r, _.pick(info, 'photo
-    Url','title')
+						_.extend r, _.pick(info, 'photoUrl','title')
 				res.ok result[0].body
 			.catch res.serverError
 
