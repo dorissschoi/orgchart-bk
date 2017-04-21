@@ -30,8 +30,13 @@
 	                 ng-repeat="item in model.models | UserFilter:searchText"
 	                 ng-if="!multiple"
 	                 ng-click="select(item);$emit('selectuser',item)"
-	                 class="item item-text-wrap">
-	            {{item.username}}
+	                 class="item item-text-wrap item-avatar item-complex">
+	<div class='item-content'>
+	<img ng-if="item.photoUrl" class="app" src="{{item.imurl}}{{item.photoUrl}}" >
+	<img ng-if="item.photoUrl==null" class="avatar icon ion-android-person" >
+	<h2><span>{{item.username}}</span></h2>
+	<p><span ng-if="item.title" style="font-weight:bold">{{item.title}}</span></p>
+	</div>
 	          </label>
 	        </div>
 	        <ion-infinite-scroll ng-if="model.state.skip < model.state.count" on-infinite="loadMore()">

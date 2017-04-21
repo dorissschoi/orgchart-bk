@@ -11,7 +11,7 @@ module.exports =
 	findOauth2User: (req, res) ->
 		cond = actionUtil.parseCriteria req
 		url = sails.config.oauth2.userURL
-		imurl = sails.config.im.url
+		imurl = "#{sails.config.im.url}"
 		values = actionUtil.parseValues(req)
 		
 		strCond = querystring.stringify(cond)
@@ -22,13 +22,13 @@ module.exports =
 		Promise
 			.all [
 				sails.services.rest().get req.user.token, "#{url}?#{strCond}"
-				sails.services.rest().get req.user.token, "#{imurl}"
+				sails.services.rest().get req.user.token, "#{imurl}api/user"
 			]	
 			.then (result) ->
 				_.each result[0].body.results, (r) ->
 					info = _.find result[1].body.results, {username: r.username}
 					if !_.isUndefined info
-						_.extend r, _.pick(info, 'photoUrl','title')
+						_.extend r, _.pick(info, 'photoUrl','title'), {imurl: "#{imurl}"}
 				res.ok result[0].body
 			.catch res.serverError
 
