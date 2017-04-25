@@ -32,8 +32,8 @@
 	                 ng-click="select(item);$emit('selectuser',item)"
 	                 class="item item-text-wrap item-avatar item-complex">
 	<div class='item-content'>
-	<img ng-if="item.photoUrl" class="app" src="{{item.imurl}}{{item.photoUrl}}" >
-	<img ng-if="item.photoUrl==null" class="avatar icon ion-android-person" >
+	<img ng-if="item.photoUrl" src="{{item.imurl}}{{item.photoUrl}}" >
+	<i ng-if="item.photoUrl==null" class="item-image icon ion-android-person "></i>
 	<h2><span>{{item.username}}</span></h2>
 	<p><span ng-if="item.title" style="font-weight:bold">{{item.title}}</span></p>
 	</div>
