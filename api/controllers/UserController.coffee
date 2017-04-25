@@ -26,7 +26,7 @@ module.exports =
 			]	
 			.then (result) ->
 				_.each result[0].body.results, (r) ->
-					info = _.find result[1].body.results, {username: r.username}
+					info = _.find result[1].body.results, {email: r.email}
 					if !_.isUndefined info
 						_.extend r, _.pick(info, 'photoUrl','title'), {imurl: "#{imurl}"}
 				res.ok result[0].body
