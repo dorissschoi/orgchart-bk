@@ -3,9 +3,27 @@ Promise = require 'promise'
 
 angular
 	.module 'starter.controller', ['ionic', 'ngCordova', 'http-auth-interceptor', 'starter.model', 'platform']		
-	.controller 'MenuCtrl', ($scope) ->
-		$scope.env = env
-		$scope.navigator = navigator
+	.controller 'MenuCtrl', ($scope, $ionicPopup, resources) ->
+		_.extend $scope,
+			showPopup: ->
+				popup = $ionicPopup.show({
+					templateUrl: 'templates/orgchart/supervisor.html',
+					title: 'Define Supervisor',
+					scope: $scope,
+					buttons: [
+						{
+							text: 'Cancel'
+						},
+						{
+							text: 'Save'
+							type: 'button-positive'
+							onTap: ->
+								return
+						}
+					]
+				})
+
+					
 		
 	.controller 'OrgChartCtrl', ($scope, collection, $location, resources, userList) ->
 		_.extend $scope,
