@@ -2,30 +2,40 @@ env = require './env.coffee'
 Promise = require 'promise'
 
 angular
-	.module 'starter.controller', ['ionic', 'ngCordova', 'http-auth-interceptor', 'starter.model', 'platform']		
-	.controller 'MenuCtrl', ($scope, $ionicPopup, resources) ->
+	.module 'starter.controller', ['ionic', 'ngCordova', 'http-auth-interceptor', 'starter.model', 'platform']
+
+	.controller 'MenuCtrl', ($scope, $ionicPopup, $state, $location, resources, me, collection, adminSelectUsers) ->
+
+		if _.isUndefined(me.supervisor) or _.isNull(me.supervisor)
+			me.supervisor = ''
+		else
+			_.map collection.models, (user) ->
+				if user.email == me.supervisor.email
+					user.id = me.supervisor.id
+
+		me.origSuper = me.supervisor
+		collection.models.unshift(new resources.User {username: 'No Supervisor', selected: false})
+
 		_.extend $scope,
-			showPopup: ->
-				popup = $ionicPopup.show({
-					templateUrl: 'templates/orgchart/supervisor.html',
-					title: 'Define Supervisor',
-					scope: $scope,
-					buttons: [
-						{
-							text: 'Cancel'
-						},
-						{
-							text: 'Save'
-							type: 'button-positive'
-							onTap: ->
-								return
-						}
-					]
-				})
+			model: me
+			collection: collection
+			userList: adminSelectUsers
+			selected: ''
+			save: (supervisor) ->
+				if _.isUndefined supervisor.email
+					supervisor = null
+					$scope.selected = ''
+				user = $scope.model
+				user.supervisor = supervisor
+				user.$save().then ->
+					$state.reload()
+
+		$scope.$on 'selectuser', (event, item) ->
+			$scope.save(item)	
 
 					
 		
-	.controller 'OrgChartCtrl', ($scope, collection, $location, resources, userList) ->
+	.controller 'OrgChartCtrl', ($scope, collection, $location, resources, userList, me) ->
 		_.extend $scope,
 			expandedNodes: []
 			listView: false
@@ -80,53 +90,6 @@ angular
 			show: ->
 				$scope.listView = true				
 			
-	.controller 'UserUpdateCtrl', ($scope, $state, $location, me, collection, resources, adminSelectUsers) ->		
-	
-		updateSup = (item) ->
-			if _.isUndefined item.email
-				$scope.model.supervisor = null
-				$scope.selected = ''
-			else
-				$scope.model.supervisor = item
-		
-		if _.isUndefined(me.supervisor) or _.isNull(me.supervisor)
-			me.supervisor = ''
-		else
-			_.map collection.models, (user) ->
-				if user.email == me.supervisor.email
-					user.id = me.supervisor.id
-		
-		me.origSuper = me.supervisor
-		collection.models.unshift(new resources.User {username: 'No Supervisor', selected: false})
-		
-		_.extend $scope,
-			model: me
-			collection: collection
-			userList: adminSelectUsers
-			selected: ''
-			save: ->
-				if $scope.model.seluser
-					user = $scope.model.seluser					
-					user.supervisor = $scope.model.supervisor
-				else
-					user = $scope.model
-				user.$save().then =>
-					if me.email != user.email
-						$scope.model.supervisor = $scope.model.origSuper
-						$scope.model.origSuper = null
-					$scope.model.seluser = null	
-					$location.url "/orgchart"
-					$state.reload()		
-		
-		$scope.$on 'selectuser', (event, item) ->
-			if $scope.userList.length==0
-				updateSup(item)
-			else
-				if _.isUndefined item.id
-					updateSup(item)
-				else
-					$scope.model.seluser = item
-				
 	.filter 'UserFilter', ->
 		(user, search) ->
 			r = new RegExp(search, 'i')

@@ -27,7 +27,25 @@ angular.module 'starter', ['ionic', 'starter.controller', 'starter.model', 'Acti
 		$stateProvider.state 'app',
 			url: ""
 			abstract: true
+			controller: 'MenuCtrl'
 			templateUrl: "templates/menu.html"
+			resolve:
+				resources: 'resources'
+				me: (resources) ->
+					resources.User.me().$fetch()
+				adminSelectUsers: (resources) ->
+					ret = new resources.AdminSelectUsers
+					ret.$fetch({params: {sort: 'name ASC'}})
+				collection: (resources, me) ->
+					resources.User.subord(me, [])
+						.then (result) ->
+							result.push me.email
+							ret = new resources.Oauth2Users()
+							ret.$fetch({params: {sort: 'name ASC'}})
+								.then (data) ->
+									ret.models = _.filter data.models, (user) ->
+										_.indexOf(result, user.email) == -1
+									return ret
 
 		$stateProvider.state 'app.update',
 			url: '/update'
@@ -68,5 +86,7 @@ angular.module 'starter', ['ionic', 'starter.controller', 'starter.model', 'Acti
 				userList: (resources) ->
 					ret = new resources.Users()
 					ret.$fetch({params: {sort: 'name ASC'}})
+				me: (resources) ->
+                                        resources.User.me().$fetch()
 
 		$urlRouterProvider.otherwise('/orgchart')
