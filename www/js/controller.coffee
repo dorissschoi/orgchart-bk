@@ -4,7 +4,7 @@ Promise = require 'promise'
 angular
 	.module 'starter.controller', ['ionic', 'ngCordova', 'http-auth-interceptor', 'starter.model', 'platform']
 
-	.controller 'MenuCtrl', ($scope, $ionicPopup, $state, $location, resources, me, collection, adminSelectUsers) ->
+	.controller 'MenuCtrl', ($scope, $ionicPopup, $state, resources, me, collection, adminSelectUsers) ->
 
 		if _.isUndefined(me.supervisor) or _.isNull(me.supervisor)
 			me.supervisor = ''
@@ -19,7 +19,6 @@ angular
 			model: me
 			collection: collection
 			userList: adminSelectUsers
-			templateUrl: if adminSelectUsers.length>0 then 'templates/user/select.html' else 'templates/user/adminSelect.html'
 			selected: ''
 			save: (user, supervisor) ->
 				if _.isUndefined supervisor.email
@@ -32,16 +31,7 @@ angular
 		$scope.$on 'selectuser', (event, item) ->
 			$scope.save($scope.model, item)
 
-		$scope.$on 'defineuser', (event, item) ->
-			$scope.collection.user = item
-
-		$scope.$on 'definesuper', (event, item) ->
-			$scope.collection.supervisor = item
-
-		$scope.$on 'saveSupervisor', (event) ->
-			$scope.save($scope.collection.user, $scope.collection.supervisor)
-		
-	.controller 'OrgChartCtrl', ($scope, collection, $location, resources, userList, me) ->
+	.controller 'OrgChartCtrl', ($scope, collection, resources, userList, me) ->
 		_.extend $scope,
 			expandedNodes: []
 			listView: false
