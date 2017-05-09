@@ -1,4 +1,4 @@
-<span ng-init="searchText = ''">
+<span ng-init="searchText = '';searchSuper = '';">
 	<a class="button icon-right ion-ios-arrow-down cellWidth" ng-click="click()">
 		{{selectedTitle()}}
 	</a>
@@ -6,15 +6,15 @@
 	<script id="fancy-select-model.html" type="text/ng-template">
 	    <ion-view class="fancy-select-items modal">
 	      <ion-header-bar class="bar-positive item-input-inset">
-			<button ng-click="deregister();modal.remove()" class="button button-positive button-icon ion-ios-arrow-back"></button>
-	        <label class="item-input-wrapper">
-				<i class="icon ion-search placeholder-icon"></i>
-			    <input type="text" ng-model="searchText">
-			</label>
+              <button ng-click="deregister();modal.remove()" class="button button-positive button-icon ion-ios-arrow-back"></button>
+              <label class="item-input-wrapper">
+                 <i class="icon ion-search placeholder-icon"></i>
+                 <input type="text" ng-model="searchText">
+              </label>
 	      </ion-header-bar>
-	
-	      <ion-content>
-	        <div class="list">
+
+              <ion-content>
+                  <div class="list">
 	          <!-- Multi select -->
 	          <ion-toggle
 	                      ng-repeat="item in model.models"
@@ -24,16 +24,15 @@
 	                      class="item item-text-wrap">
 	            {{item[label]()}}
 	          </ion-toggle>
+
 	
+
 	          <!-- Single select -->
 	          <label
-	                 ng-repeat="item in model.models | UserFilter:searchText"
-	                 ng-if="!multiple"
-	                 ng-click="select(item);$emit('selectuser',item)"
-	                 class="item item-text-wrap item-avatar item-complex">
-	<div class='item-content'>
-	<img ng-if="item.photoUrl" src="{{item.imurl}}{{item.photoUrl}}" >
-	<i ng-if="item.photoUrl==null" class="item-image icon ion-android-person "></i>
+	                 ng-repeat="item in model.models | UserFilter:searchText" ng-if="!multiple" ng-click="select(item);$emit('selectuser',item)" class="item item-text-wrap item-avatar item-complex">
+        <div class='item-content'>
+        <img ng-if="item.photoUrl" src="{{item.imurl}}{{item.photoUrl}}" >
+        <i ng-if="item.photoUrl==null" class="item-image icon ion-android-person "></i>
 	<h2><span>{{item.username}}</span></h2>
 	<p><span ng-if="item.title" style="font-weight:bold">{{item.title}}</span></p>
 	</div>
@@ -41,7 +40,7 @@
 	        </div>
 	        <ion-infinite-scroll ng-if="model.state.skip < model.state.count" on-infinite="loadMore()">
 			</ion-infinite-scroll>
-	      </ion-content>
+              </ion-content>
 	    </ion-view>
 	</script>
 </span>

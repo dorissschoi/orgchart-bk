@@ -13,27 +13,33 @@ angular
 				if user.email == me.supervisor.email
 					user.id = me.supervisor.id
 
-		me.origSuper = me.supervisor
 		collection.models.unshift(new resources.User {username: 'No Supervisor', selected: false})
 
 		_.extend $scope,
 			model: me
 			collection: collection
 			userList: adminSelectUsers
+			templateUrl: if adminSelectUsers.length>0 then 'templates/user/select.html' else 'templates/user/adminSelect.html'
 			selected: ''
-			save: (supervisor) ->
+			save: (user, supervisor) ->
 				if _.isUndefined supervisor.email
 					supervisor = null
 					$scope.selected = ''
-				user = $scope.model
 				user.supervisor = supervisor
 				user.$save().then ->
 					$state.reload()
 
 		$scope.$on 'selectuser', (event, item) ->
-			$scope.save(item)	
+			$scope.save($scope.model, item)
 
-					
+		$scope.$on 'defineuser', (event, item) ->
+			$scope.collection.user = item
+
+		$scope.$on 'definesuper', (event, item) ->
+			$scope.collection.supervisor = item
+
+		$scope.$on 'saveSupervisor', (event) ->
+			$scope.save($scope.collection.user, $scope.collection.supervisor)
 		
 	.controller 'OrgChartCtrl', ($scope, collection, $location, resources, userList, me) ->
 		_.extend $scope,
