@@ -14,7 +14,7 @@ util = require 'util'
 gulp.task 'default', ['sass', 'coffee']
 
 gulp.task 'config', ->
-  params = _.pick process.env, 'ROOTURL', 'AUTHURL', 'MOBILEURL', 'SENDER_ID', 'WEB_CLIENT_ID', 'OAUTH2_SCOPE'
+  params = _.pick process.env, 'ROOTURL', 'AUTHURL', 'MOBILEURL', 'SENDER_ID', 'WEB_CLIENT_ID', 'OAUTH2_SCOPE', 'ADMIN_ID', 'ADMIN_EMAIL'
   fs.writeFileSync 'www/js/config.json', util.inspect(params)
 
 gulp.task 'sass', (done) ->

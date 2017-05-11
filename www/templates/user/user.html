@@ -1,0 +1,21 @@
+<div>
+  <label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="search" placeholder="Search" >
+  </label>
+</div>
+
+<ion-list>
+  <ion-item ng-repeat="model in collection.models" 
+    item="item" class="item-avatar"
+    ng-click="highlightUser(model);" 
+    ng-class="{'selectedStyle': activeItem.username == model.username}">
+      <i class="icon ion-person"></i>
+      <h2><span>{{model.username}}</span></h2>
+      <p><span ng-if="model.title" style="font-weight:bold">{{model.title}}</span></p>
+  </ion-item>
+</ion-list> 
+
+<ion-infinite-scroll ng-if="collection.state.skip < collection.state.count"
+  on-infinite="loadMore()"> 
+</ion-infinite-scroll>

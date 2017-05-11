@@ -4,8 +4,18 @@ Promise = require 'promise'
 angular
 	.module 'starter.controller', ['ionic', 'ngCordova', 'http-auth-interceptor', 'starter.model', 'platform']
 
-	.controller 'MenuCtrl', ($scope, $ionicPopup, $state, resources, me, collection, adminSelectUsers) ->
-
+	.controller 'MenuCtrl', ($scope, $ionicModal, $ionicSideMenuDelegate, $ionicPopup, $state, resources, me, collection, adminSelectUsers) ->
+			
+		$ionicModal
+			.fromTemplateUrl 'templates/user/userSelect.html',
+			  scope: $scope
+			.then (modal) ->
+				$scope.userModal = modal
+		$ionicModal
+			.fromTemplateUrl 'templates/user/adminSelect.html',
+			  scope: $scope
+			.then (modal) ->
+				$scope.adminModal = modal
 		if _.isUndefined(me.supervisor) or _.isNull(me.supervisor)
 			me.supervisor = ''
 		else
@@ -20,6 +30,24 @@ angular
 			collection: collection
 			userList: adminSelectUsers
 			selected: ''
+			highlightUser: (user) ->
+				$scope.activeItem = user
+			loadMore: ->
+				collection.$fetch()
+					.then ->
+						$scope.$broadcast('scroll.infiniteScrollComplete')
+					.catch alert
+
+			userSave: (user) ->
+				if _.isUndefined $scope.activeItem
+					supervisor = null
+				user.supervisor = $scope.activeItem
+				$scope.activeItem = null
+				user.$save().then ->
+					$scope.activeItem = null
+					$ionicSideMenuDelegate.toggleLeft()
+					$state.reload()
+
 			save: (user, supervisor) ->
 				if _.isUndefined supervisor.email
 					supervisor = null

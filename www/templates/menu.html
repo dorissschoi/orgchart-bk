@@ -8,10 +8,16 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="bar-stable">
-      <h1 class="title">Menu</h1>
+      <h1 class="title">{{model.email}}</h1>
     </ion-header-bar>
     <ion-content>
       <ion-list>
+	<a class="item item-icon-right" href="#" ng-click="adminModal.show()">
+	A Supervisor: {{model.supervisor.email}}
+	</a>
+	<a class="item item-icon-right" href="#" ng-click="userModal.show()">
+	U Supervisor: {{model.supervisor.email}}
+	</a>
       	<ion-item nav-clear menu-close>
 		<div>Define Supervisor:</div>
 		<div ng-init="selected=model.supervisor">
