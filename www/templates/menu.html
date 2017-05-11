@@ -18,17 +18,6 @@
 	<a class="item item-icon-right" href="#" ng-click="userModal.show()">
 	U Supervisor: {{model.supervisor.email}}
 	</a>
-      	<ion-item nav-clear menu-close>
-		<div>Define Supervisor:</div>
-		<div ng-init="selected=model.supervisor">
-			<fancy-select-model template-url="templates/user/select.html"
-				ng-selected="selected" 
-				ng-model="collection" 
-				label="username" 
-				title="Select users">
-			</fancy-select-model>
-		</div>
-        </ion-item>
       </ion-list>
     </ion-content>
   </ion-side-menu>

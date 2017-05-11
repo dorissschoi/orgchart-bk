@@ -30,8 +30,10 @@ angular
 			collection: collection
 			userList: adminSelectUsers
 			selected: ''
+			highlightSupervisor: (user) ->
+				$scope.selSupervisor = user
 			highlightUser: (user) ->
-				$scope.activeItem = user
+				$scope.selUser = user
 			loadMore: ->
 				collection.$fetch()
 					.then ->
@@ -39,10 +41,11 @@ angular
 					.catch alert
 
 			userSave: (user) ->
-				if _.isUndefined $scope.activeItem
-					supervisor = null
-				user.supervisor = $scope.activeItem
-				$scope.activeItem = null
+				if _.isUndefined $scope.selSupervisor
+					user.supervisor = null
+				else
+					user.supervisor = $scope.selSupervisor
+				$scope.selSupervisor = null
 				user.$save().then ->
 					$scope.activeItem = null
 					$ionicSideMenuDelegate.toggleLeft()
