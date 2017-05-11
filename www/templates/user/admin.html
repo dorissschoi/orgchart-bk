@@ -8,8 +8,8 @@
 <ion-list>
   <ion-item ng-repeat="model in collection.models" 
     item="item" class="item-avatar"
-    ng-click="highlightSupervisor(model);" 
-    ng-class="{'selectedUser': selSupervisor.username == model.username}">
+    ng-click="highlightAdmin(model, collection);" 
+    ng-class="{'selectedAdmin': selUser.username == model.username}">
       <i class="icon ion-person"></i>
       <h2><span>{{model.username}}</span></h2>
       <p><span ng-if="model.title" style="font-weight:bold">{{model.title}}</span></p>
