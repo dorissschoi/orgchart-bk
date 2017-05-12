@@ -33,9 +33,12 @@ angular.module 'starter', ['ionic', 'starter.controller', 'starter.model', 'Acti
 				resources: 'resources'
 				me: (resources) ->
 					resources.User.me().$fetch()
-				adminSelectUsers: (resources) ->
-					ret = new resources.AdminSelectUsers
-					ret.$fetch({params: {sort: 'name ASC'}})
+				allUsers: (resources) ->
+					ret = new resources.Oauth2Users()
+					ret.$fetch({params: {sort: 'name ASC'}})						
+						.then (data) ->
+							return data
+
 				collection: (resources, me) ->
 					resources.User.subord(me, [])
 						.then (result) ->

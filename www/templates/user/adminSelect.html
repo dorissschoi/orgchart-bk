@@ -1,7 +1,7 @@
 <ion-modal-view>
   <ion-header-bar class="bar-positive">
     <h1 class="title">Admin Define Supervisor</h1>
-    <button class="button button-clear button-primary" ng-click="adminModal.hide();adminSave(model);">Save</button>
+    <button class="button button-clear button-primary" ng-click="adminModal.hide();adminSave();">Save</button>
   </ion-header-bar>
   <ion-view>
 
@@ -9,12 +9,12 @@
       <div class="row" style="margin-left: 0px;">
         <div class="col col-50">
           <ion-scroll style="width:100%; height: 500px"> Supervisor:
-          <ng-include src="'templates/user/user.html'" >
+          <ng-include src="'templates/user/supervisor.html'" >
           </ion-scroll>
         </div>
         <div class="col col-50">
           <ion-scroll style="width:100%; height: 500px"> User:
-          <ng-include src="'templates/user/admin.html'" >
+          <ng-include src="'templates/user/user.html'" >
           </ion-scroll>
         </div>
       </div>

@@ -4,7 +4,7 @@ Promise = require 'promise'
 angular
 	.module 'starter.controller', ['ionic', 'ngCordova', 'http-auth-interceptor', 'starter.model', 'platform']
 
-	.controller 'MenuCtrl', ($scope, $ionicModal, $ionicSideMenuDelegate, $ionicPopup, $state, resources, me, collection, adminSelectUsers) ->
+	.controller 'MenuCtrl', ($scope, $ionicModal, $ionicSideMenuDelegate, $ionicPopup, $state, resources, me, collection, allUsers) ->
 			
 		$ionicModal
 			.fromTemplateUrl 'templates/user/userSelect.html',
@@ -28,12 +28,15 @@ angular
 		_.extend $scope,
 			model: me
 			collection: collection
-			userList: adminSelectUsers
-			selected: ''
+			allUsers: allUsers
 			highlightSupervisor: (user) ->
 				$scope.selSupervisor = user
 			highlightUser: (user) ->
 				$scope.selUser = user
+				newUser = new resources.User {username: user.username, email: user.email}
+				newUser.$save()
+					.then (u) ->
+						$scope.selectUser = u
 			loadMore: ->
 				collection.$fetch()
 					.then ->
@@ -41,22 +44,24 @@ angular
 					.catch alert
 
 			userSave: (user) ->
-				if _.isUndefined $scope.selSupervisor or $scope.selSupervisor.username == "No Supervisor"
+				if (_.isUndefined $scope.selSupervisor) or ($scope.selSupervisor.username == "No Supervisor")
 					user.supervisor = null
 				else
 					user.supervisor = $scope.selSupervisor
 				$scope.selSupervisor = null
 				user.$save().then ->
-					$scope.activeItem = null
 					$ionicSideMenuDelegate.toggleLeft()
 					$state.reload()
 
-			save: (user, supervisor) ->
-				if _.isUndefined supervisor.email
-					supervisor = null
-					$scope.selected = ''
-				user.supervisor = supervisor
-				user.$save().then ->
+			adminSave: ->
+				if _.isUndefined $scope.selSupervisor or $scope.selSupervisor.username == "No Supervisor"
+					$scope.selectUser.supervisor = null
+				else
+					$scope.selectUser.supervisor = $scope.selSupervisor
+				$scope.selSupervisor = null
+				$scope.selUser = null
+				$scope.selectUser.$save().then ->
+					$ionicSideMenuDelegate.toggleLeft()
 					$state.reload()
 
 		$scope.$on 'selectuser', (event, item) ->

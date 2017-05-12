@@ -37,6 +37,19 @@ module.exports =
 			.find(req)
 			.then res.ok
 			.catch res.serverError
+
+	create: (req, res) ->
+		Model = actionUtil.parseModel(req)
+		data = actionUtil.parseValues(req)
+		cond = 
+			username: data.username 
+			email: data.email
+		_.extend data, url: "#{sails.config.oauth2.userURL}#{data.username}/"
+		Model.findOrCreate cond, data
+			.then (newInstance) ->
+				res.created(newInstance)
+			.catch res.serverError
+
 	update: (req, res) ->
 		pk = actionUtil.requirePk(req)
 		user = actionUtil.parseValues(req)

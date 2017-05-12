@@ -4,11 +4,12 @@
     <input type="search" placeholder="Search" >
   </label>
 </div>
+
 <ion-list>
-  <ion-item ng-repeat="model in allUsers.models" 
+  <ion-item ng-repeat="model in collection.models" 
     item="item" class="item-avatar"
-    ng-click="highlightUser(model);" 
-    ng-class="{'selectedAdmin': selUser.username == model.username}">
+    ng-click="highlightSupervisor(model);" 
+    ng-class="{'selectedUser': selSupervisor.username == model.username}">
       <i class="icon ion-person"></i>
       <h2><span>{{model.username}}</span></h2>
       <p><span ng-if="model.title" style="font-weight:bold">{{model.title}}</span></p>

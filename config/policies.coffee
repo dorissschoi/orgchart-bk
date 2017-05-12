@@ -8,3 +8,4 @@ module.exports =
 			findOauth2User:		['isAuth']
 			findPageableUser:	true
 			findForSelect: ['isAuth', 'user/isAdmin']
+			create: ['isAuth', 'user/isAdmin']
