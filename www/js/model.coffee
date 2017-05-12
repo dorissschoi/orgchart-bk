@@ -46,7 +46,12 @@ angular.module 'starter.model', ['PageableAR']
 					new User(subordinate)
 				
 				return data
-		
+
+			isAdmin: ->
+				if env.admin.username == @.username
+					return true
+				else
+					return false		
 		class Users extends pageableAR.PageableCollection
 			model: User
 			$urlRoot: "api/pageable/user"		

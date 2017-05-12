@@ -12,11 +12,11 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-	<a class="item item-icon-right" href="#" ng-click="adminModal.show()">
-	A Supervisor: {{model.supervisor.email}}
+	<a class="item item-icon-right" href="#" ng-if="model.isAdmin()" ng-click="adminModal.show()">
+	Supervisor: {{model.supervisor.email}}
 	</a>
-	<a class="item item-icon-right" href="#" ng-click="userModal.show()">
-	U Supervisor: {{model.supervisor.email}}
+	<a class="item item-icon-right" href="#" ng-if="!model.isAdmin()" ng-click="userModal.show()">
+	Supervisor: {{model.supervisor.email}}
 	</a>
       </ion-list>
     </ion-content>

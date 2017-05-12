@@ -8,6 +8,8 @@ io.sails.path = path.join root.path, 'socket.io'
 io.sails.useCORSRouteToGetCookie = false
 
 module.exports =
+	admin:
+		username:	config.ADMIN_ID
 	server:
 		app:
 			url:		url					# server url

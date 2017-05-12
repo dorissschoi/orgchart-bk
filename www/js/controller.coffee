@@ -41,7 +41,7 @@ angular
 					.catch alert
 
 			userSave: (user) ->
-				if _.isUndefined $scope.selSupervisor
+				if _.isUndefined $scope.selSupervisor or $scope.selSupervisor.username == "No Supervisor"
 					user.supervisor = null
 				else
 					user.supervisor = $scope.selSupervisor
