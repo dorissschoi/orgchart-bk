@@ -43,6 +43,11 @@ angular
 						$scope.$broadcast('scroll.infiniteScrollComplete')
 					.catch alert
 
+			loadMoreUsers: ->
+				allUsers.$fetch()
+					.then ->
+						$scope.$broadcast('scroll.infiniteScrollComplete')
+					.catch alert
 			userSave: (user) ->
 				if (_.isUndefined $scope.selSupervisor) or ($scope.selSupervisor.username == "No Supervisor")
 					user.supervisor = null

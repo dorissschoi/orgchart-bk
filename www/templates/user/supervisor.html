@@ -1,15 +1,15 @@
 <div>
   <label class="item item-input">
     <i class="icon ion-search placeholder-icon"></i>
-    <input type="search" placeholder="Search" >
+    <input type="search" ng-model="searchText" placeholder="Search" >
   </label>
 </div>
 
 <ion-list>
-  <ion-item ng-repeat="model in collection.models" 
+  <ion-item ng-repeat="model in collection.models | UserFilter:searchText" 
     item="item" class="item-avatar"
     ng-click="highlightSupervisor(model);" 
-    ng-class="{'selectedUser': selSupervisor.username == model.username}">
+    ng-class="{'selectedSupervisor': selSupervisor.username == model.username}">
       <i class="icon ion-person"></i>
       <h2><span>{{model.username}}</span></h2>
       <p><span ng-if="model.title" style="font-weight:bold">{{model.title}}</span></p>
