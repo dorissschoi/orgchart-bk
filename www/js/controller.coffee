@@ -16,12 +16,6 @@ angular
 			  scope: $scope
 			.then (modal) ->
 				$scope.adminModal = modal
-		if _.isUndefined(me.supervisor) or _.isNull(me.supervisor)
-			me.supervisor = ''
-		else
-			_.map collection.models, (user) ->
-				if user.email == me.supervisor.email
-					user.id = me.supervisor.id
 
 		collection.models.unshift(new resources.User {username: 'No Supervisor', selected: false})
 
@@ -69,8 +63,6 @@ angular
 					$ionicSideMenuDelegate.toggleLeft()
 					$state.reload()
 
-		$scope.$on 'selectuser', (event, item) ->
-			$scope.save($scope.model, item)
 
 	.controller 'OrgChartCtrl', ($scope, collection, resources, userList, me) ->
 		_.extend $scope,
