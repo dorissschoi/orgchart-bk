@@ -53,7 +53,7 @@ angular
 					$state.reload()
 
 			adminSave: ->
-				if _.isUndefined $scope.selSupervisor or $scope.selSupervisor.username == "No Supervisor"
+				if (_.isUndefined $scope.selSupervisor) or ($scope.selSupervisor.username == "No Supervisor")
 					$scope.selectUser.supervisor = null
 				else
 					$scope.selectUser.supervisor = $scope.selSupervisor
